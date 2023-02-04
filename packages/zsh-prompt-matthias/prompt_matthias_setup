@@ -1,0 +1,45 @@
+# My prompt setup based on the looks of the GRML prompt (https://grml.org/zsh/)
+
+prompt_matthias_ps1() {
+    local parts=()
+    #Prefix: Exit code, user, host
+    parts+=( "%B%F{red}%(?..%? )%F{%(!.red.blue)}%n%f%b@%m" )
+    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+        # Give a notice if running in ssh
+        parts+=( " [ssh]" )
+    fi
+    # Put path
+    parts+=( " %36<..<%B%~%b%<<" )
+    if [ -n $vcs_info_msg_0_ ]; then
+        # Add general vcs information
+        parts+=( "$vcs_info_msg_0_" )
+    fi
+    # Add % at the end
+    parts+=( " %# " )
+    # Concat all parts into a single PS1 string 
+    printf -v PS1 %s ${parts[@]}
+}
+
+prompt_matthias_precmd() {
+    vcs_info
+    prompt_matthias_ps1
+}
+
+prompt_matthias_setup() {
+    autoload -Uz vcs_info
+    zstyle ":vcs_info:*" enable ALL
+    zstyle ":vcs_info:*" check-for-staged-changes true
+    zstyle ":vcs_info:*" stagedstr "*"
+    zstyle ":vcs_info:*" formats " %F{cyan}[%s: %F{green}%b%c%u%F{cyan}]%f"
+    zstyle ":vcs_info:*" actionformat " %F{cyan}[%s: %F{red}%b%c%u|%a%F{cyan}]%f"
+
+    add-zsh-hook precmd prompt_matthias_precmd
+}
+
+prompt_matthias_cleanup() {
+    add-zsh-hook -d prompt_matthias_precmd
+}
+
+prompt_matthias_setup $@
+
+# vim: ft=zsh:
