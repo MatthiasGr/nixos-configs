@@ -4,7 +4,11 @@
     "${modulesPath}/profiles/qemu-guest.nix"
   ];
 
-  networking.hostName = "vm";
+  networking = {
+    hostName = "vm";
+    # The firewall is to be provided by the host
+    firewall.enable = false;
+  };
 
   boot = {
     # Prefer grub over systemd-boot as it seems to play better with qemu's serial console
@@ -41,6 +45,7 @@
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMhbCKw4C3PJIxwN1AhyzYRhfiYwh5oMdXbvRhH4F39Y Desktop VM Key"
       ];
+      extraGroups = [ "podman" ];
   };
 
   security.sudo.wheelNeedsPassword = false;
