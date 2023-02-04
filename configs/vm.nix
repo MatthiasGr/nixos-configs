@@ -38,7 +38,9 @@
   users.users.matthias = {
       # This allows logging in without password but disallows SSH password auth.
       hashedPassword = "";
-      openssh.authorizedKeys.keys = [];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMhbCKw4C3PJIxwN1AhyzYRhfiYwh5oMdXbvRhH4F39Y Desktop VM Key"
+      ];
   };
 
   security.sudo.wheelNeedsPassword = false;
