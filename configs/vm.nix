@@ -8,6 +8,7 @@
     hostName = "vm";
     # The firewall is to be provided by the host
     firewall.enable = false;
+    dhcpcd.enable = false;
   };
 
   boot = {
@@ -46,6 +47,18 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMhbCKw4C3PJIxwN1AhyzYRhfiYwh5oMdXbvRhH4F39Y Desktop VM Key"
       ];
       extraGroups = [ "podman" ];
+  };
+
+  systemd.network = {
+    enable = true;
+    networks = {
+      lan = {
+        enable = true;
+        name = "en*";
+        # Use SLAAC for IPv6
+        DHCP = "ipv4";
+      };
+    };
   };
 
   security.sudo.wheelNeedsPassword = false;
