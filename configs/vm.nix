@@ -68,4 +68,8 @@
     dockerSocket.enable = true;
     autoPrune.enable = true;
   };
+
+  environment.etc."containers/registries.conf.d/01-unqualified-docker.conf".text = ''
+    unqualified-search-registries = ["docker.io"]
+  '';
 }

@@ -13,10 +13,16 @@
   };
 
   environment.systemPackages = with pkgs; [
+    bat
     curl
+    docker
+    docker-compose
     fzf
-    openssl
+    git-crypt
+    htop
     openssh
+    openssl
+    ripgrep
     zsh-prompt-matthias
     # TODO: What else do I need?
   ];
@@ -53,7 +59,7 @@
         zstyle ":completion:*" menu select=5
         zstyle ":completion:*" group-name ""
         zstyle ":completion:*" verbose yes
-        zstyle ':completion:*' squeeze-slashes true
+        zstyle ":completion:*" squeeze-slashes true
         zstyle ":completion:*:matches" group yes
         zstyle ":completion:*:options" description yes
         zstyle ":completion:*:options" auto-description "%d"
