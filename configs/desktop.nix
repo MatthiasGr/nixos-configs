@@ -43,7 +43,7 @@
   networking = {
     hostName = "desktop";
     dhcpcd.enable = false;
-    networking.networkmanager.enable = true;
+    networkmanager.enable = true;
   };
 
   sound.enable = true;
