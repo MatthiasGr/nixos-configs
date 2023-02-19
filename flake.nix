@@ -9,6 +9,7 @@
   let
     system = "x86_64-linux";
     localPkgs = import ./packages;
+    secrets = import ./secrets;
     pkgs = import nixpkgs {
       inherit system;
       config.allowUnfree = true;
@@ -16,14 +17,22 @@
     };
     lib = nixpkgs.lib;
     makeDiskImage = import "${nixpkgs}/nixos/lib/make-disk-image.nix";
+    specialArgs = attrs // { inherit secrets; };
   in rec {
     nixosConfigurations = {
       vm = lib.nixosSystem {
-        inherit system pkgs;
-        specialArgs = attrs;
+        inherit system pkgs specialArgs;
         modules = [
           ./configs/common.nix
           ./configs/vm.nix
+        ];
+      };
+
+      desktop = lib.nixosSystem {
+        inherit system pkgs specialArgs;
+        modules = [
+          ./configs/common.nix
+          ./configs/desktop.nix
         ];
       };
     };
