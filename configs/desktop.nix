@@ -4,8 +4,12 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    initrd.systemd.enable = true;
-    kernelParams = [];
+    initrd = {
+      systemd.enable = true;
+      availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage"];
+    };
+    kernelParams = ["systemd.unified_cgroup_hierarchy=1" "nvidia-drm.modeset=1"];
+    kernelModules = [ "kvm-amd" ];
   };
 
   fileSystems = {
@@ -33,7 +37,13 @@
   };
 
   time.timeZone = "Europe/Berlin";
-  i18n.defaultLocale = "de_DE.UTF-8";
+  i18n = {
+    defaultLocale = "de_DE.UTF-8";
+    supportedLocales = [
+      "de_DE.UTF-8/UTF-8"
+      "en_US.UTF-8/UTF-8"
+    ];
+  };
 
   users.users = {
     root.hashedPassword = secrets.desktop.pwdHashes.root;
