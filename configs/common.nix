@@ -23,6 +23,7 @@
     openssh
     openssl
     ripgrep
+    tmux
     zsh-prompt-matthias
     # TODO: What else do I need?
   ];
