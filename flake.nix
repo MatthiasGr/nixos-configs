@@ -3,9 +3,13 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+    homeManager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs }@attrs:
+  outputs = { self, nixpkgs, homeManager }@attrs:
   let
     system = "x86_64-linux";
     localPkgs = import ./packages;
@@ -33,8 +37,16 @@
         modules = [
           ./configs/common.nix
           ./configs/desktop.nix
+          ./configs/home-manager.nix
         ];
       };
+    };
+
+    homeConfigurations.matthias = homeManager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = [
+        ./homes/matthias.nix
+      ];
     };
 
     vm-image = makeDiskImage {
