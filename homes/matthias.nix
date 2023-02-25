@@ -22,7 +22,7 @@
     };
     firefox = {
       enable = true;
-      package = pkgs.wrapFirefox firefox-unwrapped {
+      package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
         extraPolicies = {
           DisableFirefoxStudies = true;
           DisablePocket = true;
