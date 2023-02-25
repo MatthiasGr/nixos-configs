@@ -1,6 +1,6 @@
 { homeManager, self, ... }: {
   imports = [
-    homeManager.nixosModules.homeManager
+    homeManager.nixosModules.home-manager
   ];
 
   home-manager.useGlobalPkgs = true;
