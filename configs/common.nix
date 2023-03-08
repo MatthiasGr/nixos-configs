@@ -9,6 +9,8 @@
       isNormalUser = true;
       autoSubUidGidRange = true;
       extraGroups = [ "wheel" ];
+      # The home directory will be created by pam
+      createHome = false;
     };
   };
 
@@ -96,6 +98,18 @@
     };
     ssh.startAgent = true;
   };
+
+  environment.etc."skel/.zshrc".text = ''
+  # Dummy file to suppress zsh-newuser-install when first logging in
+  # Run `autoload -Uz zsh-newuser-install && zsh-newuser-install -f`
+  '';
+
+  # TODO: Use a deviation instead?
+  security.pam.services = {
+    login.makeHomeDir = true;
+    sshd.makeHomeDir = true;
+  };
+  security.pam.makeHomeDir.skelDirectory = "/etc/skel";
 
   system.stateVersion = "23.05";
 }
