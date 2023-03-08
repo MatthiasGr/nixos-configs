@@ -4,6 +4,14 @@
     "${modulesPath}/profiles/qemu-guest.nix"
   ];
 
+  nix = {
+    settings.auto-optimise-store = true;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+    };
+  };
+
   networking = {
     hostName = "vm";
     # The firewall is to be provided by the host
@@ -23,7 +31,11 @@
         terminal_output --append serial
       '';
     };
-    initrd.systemd.enable = true;
+    initrd.systemd = {
+      enable = true;
+      repart.enable = true;
+    };
+    cleanTmpDir = true;
     kernelParams = [ "console=ttyS0" ];
   };
 
