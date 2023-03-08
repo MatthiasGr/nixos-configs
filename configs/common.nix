@@ -15,6 +15,7 @@
   environment.systemPackages = with pkgs; [
     bat
     curl
+    direnv
     docker
     docker-compose
     fzf
@@ -74,6 +75,8 @@
         zstyle ":completion:*:approximate:*" max-errors 3 numeric
 
         source ${pkgs.fzf}/share/fzf/key-bindings.zsh
+        # TODO: Should direnv also be run in noninteractive shells?
+        eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
       '';
       promptInit = ''
         fpath=(${pkgs.zsh-prompt-matthias}/usr/share/zsh/functions $fpath)
