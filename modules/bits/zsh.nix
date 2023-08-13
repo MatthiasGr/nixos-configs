@@ -1,34 +1,6 @@
-{ pkgs, ... }: {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  users = {
-    defaultUserShell = pkgs.zsh;
-    users.matthias = {
-      isNormalUser = true;
-      autoSubUidGidRange = true;
-      extraGroups = [ "wheel" ];
-      # The home directory will be created by pam
-      createHome = false;
-    };
-  };
-
+{ pkgs, config, lib, ... }: lib.mkIf config.bits.zsh {
   environment.systemPackages = with pkgs; [
-    bat
-    curl
-    direnv
-    docker
-    docker-compose
     fzf
-    git-crypt
-    htop
-    openssh
-    openssl
-    ripgrep
-    tmux
-    zsh-prompt-matthias
-    # TODO: What else do I need?
   ];
 
   programs = {
@@ -76,8 +48,10 @@
         zstyle ":completion:*" completer _complete _match _approximate
         zstyle ":completion:*:approximate:*" max-errors 3 numeric
 
+        ZVM_INIT_MODE=sourcing
+
+        source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
         source ${pkgs.fzf}/share/fzf/key-bindings.zsh
-        # TODO: Should direnv also be run in noninteractive shells?
         eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
       '';
       promptInit = ''
@@ -87,29 +61,7 @@
         prompt matthias
       '';
     };
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      vimAlias = true;
-    };
-    git = {
-      enable = true;
-      config.init.defaultBranch = "main";
-    };
-    ssh.startAgent = true;
   };
 
-  environment.etc."skel/.zshrc".text = ''
-  # Dummy file to suppress zsh-newuser-install when first logging in
-  # Run `autoload -Uz zsh-newuser-install && zsh-newuser-install -f`
-  '';
-
-  # TODO: Use a deviation instead?
-  security.pam.services = {
-    login.makeHomeDir = true;
-    sshd.makeHomeDir = true;
-  };
-  security.pam.makeHomeDir.skelDirectory = "/etc/skel";
-
-  system.stateVersion = "23.05";
+  users.defaultUserShell = pkgs.zsh;
 }
