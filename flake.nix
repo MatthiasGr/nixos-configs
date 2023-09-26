@@ -41,5 +41,6 @@
       };
 
       formatter = lib.genAttrs systems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
+      packages = lib.genAttrs systems pkgsForSystem;
     };
 }
