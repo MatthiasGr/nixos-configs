@@ -24,38 +24,4 @@
       userName = "Matthias Griebl";
     };
   };
-
-  stylix = {
-    image = "${pkgs.desert-sands-wallpaper}/img-4.png";
-    polarity = "dark";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/espresso.yaml";
-    fonts = {
-      sansSerif = {
-        package = pkgs.noto-fonts;
-        name = "Noto Sans";
-      };
-
-      serif = {
-        package = pkgs.noto-fonts;
-        name = "Noto Sans";
-      };
-
-      monospace = {
-        package = pkgs.jetbrains-mono;
-        name = "JetBrains Mono";
-      };
-
-      emoji = {
-        package = pkgs.noto-fonts-emoji;
-        name = "Noto Color Emoji";
-      };
-
-      sizes = {
-        applications = 11;
-        desktop = 11;
-        popups = 11;
-        terminal = 11;
-      };
-    };
-  };
 }

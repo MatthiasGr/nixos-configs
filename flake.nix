@@ -6,13 +6,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
   }; 
-  outputs = { self, nixpkgs, home-manager, stylix }:
+  outputs = { self, nixpkgs, home-manager }:
     let
       pkgsForSystem = system: import nixpkgs {
         inherit system;
@@ -35,7 +30,6 @@
       homeConfigurations.matthias = home-manager.lib.homeManagerConfiguration {
         pkgs = pkgsForSystem "x86_64-linux";
         modules = [
-          stylix.homeManagerModules.stylix
           ./home/matthias.nix
         ];
       };
