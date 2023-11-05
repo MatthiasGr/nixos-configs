@@ -13,11 +13,6 @@
   programs = {
     home-manager.enable = true;
     vscode.enable = true;
-    firefox = {
-      enable = true;
-      # TODO: Add config options to the package?
-      package = pkgs.firefox-devedition;
-    };
     git = {
       enable = true;
       userEmail = "matthias.griebl@outlook.de";
