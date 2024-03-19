@@ -1,24 +1,10 @@
 { config, lib, pkgs, ... }: lib.mkIf config.bits.graphical {
   services = {
-    xserver = {
+    xserver.displayManager.sddm = {
       enable = true;
-      desktopManager.plasma5.enable = true;
-      # TODO: Maybe try out hyperland?
-      displayManager.sddm = {
-        enable = true;
-        # No X11 running as root anymore
-        settings = {
-          General = {
-            #DisplayServer = "wayland";
-            GreeterEnvironment="QT_PLUGIN_PATH=${pkgs.libsForQt5.layer-shell-qt}/${pkgs.libsForQt5.qtbase.qtPluginPrefix},QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
-          };
-          Wayland = {
-            CompositorCommand="${pkgs.libsForQt5.kwin}/bin/kwin_wayland --no-lockscreen --no-global-shortcuts --locale1";
-            EnableHiDPI=true;
-          };
-        };
-      };
+      wayland.enable = true;
     };
+    desktopManager.plasma6.enable = true;
 
     pipewire = {
       enable = true;
@@ -61,17 +47,18 @@
 
   security.rtkit.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    # Extra graphical applications
-    libsForQt5.filelight
-    partition-manager
-    # KDE/KWin plugin
-    polonium
-    kwin-dynamic-workspaces
-    libsForQt5.applet-window-buttons
-    # Theme stuff
-    lightly-boehs
-    libsForQt5.lightly
-    papirus-icon-theme
-  ];
+  environment = {
+    systemPackages = with pkgs; with kdePackages; [
+      # Extra graphical applications
+      filelight
+      partitionmanager
+      # KDE/KWin plugin
+      # Theme stuff
+      papirus-icon-theme
+    ];
+    plasma6.excludePackages = with pkgs.kdePackages; [
+      elisa
+      khelpcenter
+    ];
+  };
 }
