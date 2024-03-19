@@ -1,14 +1,14 @@
 { buildNpmPackage, fetchFromGitHub }: buildNpmPackage rec {
   pname = "polonium";
-  version = "0.6.0";
+  version = "1.0b1";
 
   src = fetchFromGitHub {
     owner = "zeroxoneafour";
-    repo = "polonium";
-    rev = "v0.6.0";
-    hash = "sha256-fZgNOcOq+owmqtplwnxeOIQpWmrga/WitCNCj89O5XA=";
+    repo = pname;
+    rev = "v${version}";
+    hash = "sha256-2uthjNhQm+hkRCPXGQm2LZunTj+J0SUuUfZL0PeRd4s=";
   };
-  npmDepsHash = "sha256-25AtM1FweWIbFot+HUMSPYTu47/0eKNpRWSlBEL0yKk=";
+  npmDepsHash = "sha256-kaT3Uyq+/JkmebakG9xQuR4Kjo7vk6BzI1/LffOj/eo=";
 
   buildPhase = ''
     make res src
