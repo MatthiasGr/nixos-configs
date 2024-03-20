@@ -1,8 +1,11 @@
 { config, lib, pkgs, ... }: lib.mkIf config.bits.graphical {
   services = {
-    xserver.displayManager.sddm = {
+    xserver = {
       enable = true;
-      wayland.enable = true;
+      displayManager.sddm = {
+        enable = true;
+        wayland.enable = true;
+      };
     };
     desktopManager.plasma6.enable = true;
 
@@ -53,6 +56,9 @@
       filelight
       partitionmanager
       # KDE/KWin plugin
+      polonium
+      kwin-script-dynamic-desktops
+      applet-window-buttons
       # Theme stuff
       papirus-icon-theme
     ];
