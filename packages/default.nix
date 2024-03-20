@@ -3,4 +3,5 @@ self: super: {
   desert-sands-wallpaper = self.callPackage ./desert-sands-wallpaper.nix { };
   polonium = self.callPackage ./polonium.nix { };
   kwin-script-dynamic-desktops = self.callPackage ./kwin-script-dynamic-desktops.nix { };
+  applet-window-buttons = self.callPackage ./applet-window-buttons.nix { };
 }
