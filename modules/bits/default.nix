@@ -1,5 +1,5 @@
 { lib, ... }: {
-  imports = [ ./common.nix ./doh.nix ./graphical.nix ./matthias.nix ./podman.nix ./zsh.nix ];
+  imports = [ ./common.nix ./doh.nix ./gaming.nix ./graphical.nix ./matthias.nix ./podman.nix ./zsh.nix ];
 
   options.bits = {
     common = lib.mkOption {
@@ -12,10 +12,15 @@
       default = false;
       description = "Use a local DNS-over-HTTPS resolver";
     };
+    gaming = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Enable gaming stuff";
+    };
     graphical = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = "Enable a graphical environment"; 
+      description = "Enable a graphical environment";
     };
     matthias = lib.mkOption {
       type = lib.types.bool;
