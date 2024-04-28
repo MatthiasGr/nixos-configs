@@ -1,8 +1,8 @@
 { stdenv, fetchFromGitHub, fetchpatch, kdePackages, cmake }:
 let
   plasma6Patch = fetchpatch {
-    url = "https://patch-diff.githubusercontent.com/raw/psifidotos/applet-window-buttons/pull/214.patch";
-    hash = "sha256-NxMaSVPg0BPoK2IO7Jjy0839FP0yqCQpZrTO0VSdd/c=";
+    url = "https://patch-diff.githubusercontent.com/raw/psifidotos/applet-window-buttons/pull/214.diff";
+    hash = "sha256-jcVcrBDip2cPs6Ow55IQWRE7rMO6sBe3QEVbPZZxLQk=";
   };
 in
 stdenv.mkDerivation rec {

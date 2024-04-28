@@ -87,6 +87,8 @@
       polonium
       kwin-script-dynamic-desktops
       applet-window-buttons
+      applet-window-title
+      libdbusmenu-gtk3
       # Theme stuff
       papirus-icon-theme
     ];
@@ -94,5 +96,6 @@
       elisa
       khelpcenter
     ];
+    sessionVariables.NIXOS_OZONE_WL = "1";
   };
 }
