@@ -2,6 +2,6 @@
   users.users.matthias = {
     isNormalUser = true;
     autoSubUidGidRange = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = with lib; [ "wheel" ] ++ optional config.programs.wireshark.enable "wireshark";
   };
 }

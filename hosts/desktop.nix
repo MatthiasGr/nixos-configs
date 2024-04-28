@@ -9,7 +9,7 @@
       };
       efi.canTouchEfiVariables = true;
     };
-    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage"];
+    initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" ];
     kernelPackages = pkgs.linuxPackages_zen;
     kernelModules = [ "kvm-amd" ];
   };
@@ -18,7 +18,7 @@
     "/" = {
       label = "p_nixos";
       fsType = "btrfs";
-      options = ["defaults" "compress=zstd"];
+      options = [ "defaults" "compress=zstd" ];
     };
     "/boot" = {
       label = "EFI";
@@ -27,7 +27,7 @@
     "/old_home" = {
       label = "p_home";
       fsType = "btrfs";
-      options = ["defaults" "compress=zstd"];
+      options = [ "defaults" "compress=zstd" ];
     };
     "/mnt/data" = {
       label = "p_data";
@@ -36,12 +36,12 @@
     "/mnt/games" = {
       label = "p_games";
       fsType = "btrfs";
-      options = ["defaults" "compress=zstd"];
+      options = [ "defaults" "compress=zstd" ];
     };
     "/mnt/sources" = {
       label = "p_sources";
       fsType = "btrfs";
-      options = ["defaults" "compress=zstd"];
+      options = [ "defaults" "compress=zstd" ];
     };
   };
 
@@ -49,6 +49,8 @@
     graphical = true;
     podman = true;
     zsh = true;
+    doh = true;
+    gaming = true;
   };
 
   networking = {
@@ -59,7 +61,14 @@
   services = {
     printing.enable = true;
     openssh.enable = true;
-    xserver.videoDrivers = ["nvidia"];
+    xserver.videoDrivers = [ "nvidia" ];
+  };
+
+  programs = {
+    wireshark = {
+      enable = true;
+      package = pkgs.wireshark-qt;
+    };
   };
 
   hardware = {
