@@ -4,4 +4,8 @@
     autoSubUidGidRange = true;
     extraGroups = with lib; [ "wheel" ] ++ optional config.programs.wireshark.enable "wireshark";
   };
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.matthias = import ../../home/matthias.nix;
 }

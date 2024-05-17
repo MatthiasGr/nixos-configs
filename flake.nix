@@ -22,6 +22,7 @@
         system = "x86_64-linux";
         pkgs = pkgsForSystem system;
         modules = [
+          home-manager.nixosModules.home-manager
           ./modules/bits
           ./hosts/desktop.nix
         ];
