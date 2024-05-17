@@ -12,7 +12,6 @@
         "auto_pushd"
         "pushd_ignore_dups"
         "complete_in_word"
-        "extended_glob"
         "unset"
         "inc_append_history"
         "extended_history"
