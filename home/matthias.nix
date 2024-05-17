@@ -10,7 +10,7 @@ in
     stateVersion = "23.05";
 
     packages = with pkgs; [
-      libsForQt5.libksysguard
+      kdePackages.libksysguard
       webcord
       prismlauncherPatched
       spotify
@@ -32,13 +32,22 @@ in
       userName = "Matthias Griebl";
     };
   };
+  
+  services = {
+    ssh-agent.enable = true;
+  };
 
-  systemd.user.services.keepassxc = {
-    Unit = {
-      Description = "KeePassXC ";
-      After = [ "graphical-session.target" ];
+  systemd.user.services = {
+    ssh-agent = {
+      Service."Environment=SSH_ASKPASS" = "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
     };
-    Install.WantedBy = [ "graphical-session.target" ];
-    Service.ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
+    keepassxc = {
+      Unit = {
+        Description = "KeePassXC ";
+        After = [ "graphical-session.target" ];
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+      Service.ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
+    };
   };
 }
