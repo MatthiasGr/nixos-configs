@@ -31,6 +31,11 @@ in
       userEmail = "matthias.griebl@outlook.de";
       userName = "Matthias Griebl";
     };
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
   };
   
   services = {

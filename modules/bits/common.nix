@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }: lib.mkIf config.bits.common {
-   environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     bat
     curl
-    direnv
     htop
     openssl
     ripgrep
@@ -34,7 +33,8 @@
       askPassword = "${pkgs.libsForQt5.ksshaskpass}/bin/ksshaskpass";
       startAgent = true;
     };
+    nix-ld.enable = true;
   };
-  
+
   services.flatpak.enable = true;
 }
