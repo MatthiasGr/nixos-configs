@@ -1,5 +1,8 @@
-{ pkgs, ... }: {
-  networking.hostName = "notebook";
+{ pkgs, config, ... }: {
+  networking = {
+    hostName = "notebook";
+    hostId = "95b517e5";
+  };
 
   boot = {
     loader = {
@@ -10,8 +13,11 @@
       efi.canTouchEfiVariables = true;
     };
     kernelModules = [ "kvm-intel" ];
-    kernelPackages = pkgs.;
-    zfs.allowHibernation = true;
+    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    zfs = {
+      allowHibernation = true;
+      forceImportRoot = false;
+    };
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "rtsx_pci_sdmmc" ];
       luks.devices.cryptroot = {
@@ -75,24 +81,36 @@
 
   networking = {
     dhcpcd.enable = false;
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi.backend = "iwd";
+    };
+    wireless.iwd.enable = true;
   };
 
   services = {
     printing.enable = true;
     openssh = {
-      enable = true;
+    enable = true;
       settings.PasswordAuthentication = false;
     };
   };
 
   programs = {
-    captive-browser.enable = true;
+    captive-browser = {
+      enable = true;
+      interface = "wlan0";
+    };
+    wireshark = {
+      enable = true;
+      package = pkgs.wireshark-qt;
+    };
   };
 
   hardware = {
     cpu.intel.updateMicrocode = true;
     rasdaemon.enable = true;
+    enableRedistributableFirmware = true;
   };
 
   system.stateVersion = "23.05";
