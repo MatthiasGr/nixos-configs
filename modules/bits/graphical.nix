@@ -1,11 +1,8 @@
 { config, lib, pkgs, ... }: lib.mkIf config.bits.graphical {
   services = {
-    xserver = {
+    displayManager.sddm = {
       enable = true;
-      displayManager.sddm = {
-        enable = true;
-        wayland.enable = true;
-      };
+      wayland.enable = true;
     };
     desktopManager.plasma6.enable = true;
 
@@ -35,7 +32,7 @@
                   ];
                 };
                 "audio.rate" = 48000;
-                "audio.position" = ["FL"];
+                "audio.position" = [ "FL" ];
                 "capture.props"."node.passive" = true;
                 "playback.props"."media.class" = "Audio/Source";
               };
@@ -74,6 +71,7 @@
         };
       };
     };
+    kdeconnect.enable = true;
   };
 
   security.rtkit.enable = true;
@@ -85,10 +83,12 @@
       partitionmanager
       # KDE/KWin plugin
       polonium
+      krohnkite
       kwin-script-dynamic-desktops
       applet-window-buttons
       applet-window-title
       libdbusmenu-gtk3
+      kio-admin
       # Theme stuff
       papirus-icon-theme
     ];
