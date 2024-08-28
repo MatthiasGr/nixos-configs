@@ -28,6 +28,16 @@
         ];
       };
 
+      nixosConfigurations.notebook = lib.nixosSystem rec {
+        system = "x86_64-linux";
+        pkgs = pkgsForSystem system;
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./modules/bits
+          ./hosts/notebook.nix
+        ];
+      };
+
       homeConfigurations.matthias = home-manager.lib.homeManagerConfiguration {
         pkgs = pkgsForSystem "x86_64-linux";
         modules = [
