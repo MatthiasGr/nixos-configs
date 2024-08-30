@@ -6,8 +6,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    impermanence.url = "github:nix-community/impermanence";
   };
-  outputs = { self, nixpkgs, home-manager }:
+  outputs = { self, nixpkgs, home-manager, impermanence }:
     let
       pkgsForSystem = system: import nixpkgs {
         inherit system;
@@ -33,6 +34,7 @@
         pkgs = pkgsForSystem system;
         modules = [
           home-manager.nixosModules.home-manager
+          impermanence.nixosModules.impermanence
           ./modules/bits
           ./hosts/notebook.nix
         ];

@@ -59,6 +59,7 @@
     "/persist" = {
       device = "zroot/safe/persist";
       fsType = "zfs";
+      neededForBoot = true;
     };
     "/home" = {
       device = "zroot/safe/home";
@@ -71,6 +72,26 @@
       device = "/dev/rootvg/swap";
     }
   ];
+
+  environment.persistence."/persist" = {
+    enable = true;
+    hideMounts = true;
+    directories = [
+      "/var/log"
+      "/var/lib/nixos"
+      "/etc/NetworkManager/system-connections"
+      "/var/lib/waydroid"
+      { directory = "/var/lib/iwd"; mode = "0700"; }
+    ];
+    files = [
+      "/etc/machine-id"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+      "/etc/ssh/ssh_host_rsa_key"
+      "/etc/ssh/ssh_host_rsa_key.pub"
+      "/var/lib/NetworkManager/timestamps"
+    ];
+  };
 
   bits = {
     doh = true;
@@ -107,8 +128,14 @@
     };
   };
 
+  # With a stateless setup, the lecture would show up every time
+  security.sudo.extraConfig = ''
+    Defaults lecture = never
+  '';
+
   hardware = {
     cpu.intel.updateMicrocode = true;
+    bluetooth.enable = true;
     rasdaemon.enable = true;
     enableRedistributableFirmware = true;
   };
