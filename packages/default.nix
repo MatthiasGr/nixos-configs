@@ -7,5 +7,5 @@ self: super: {
   applet-window-title = self.callPackage ./applet-window-title.nix { };
   proton-ge-custom = self.callPackage ./proton-ge-custom.nix { };
   krohnkite = self.callPackage ./krohnkite { };
-  forest-cascade-wallpaper = self.callPackage ./forest-cascade-wallpaper { };
+  forest-cascades-wallpaper = self.callPackage ./forest-cascades-wallpaper { };
 }
