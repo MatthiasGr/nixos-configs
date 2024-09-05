@@ -1,22 +1,24 @@
-{ pkgs, ... }: let
-  prismlauncherPatched = pkgs.prismlauncher.override {
-    glfw = pkgs.glfw-wayland-minecraft;
-  };
-in
-{
+{ pkgs, ... }: {
   home = {
     username = "matthias";
     homeDirectory = "/home/matthias";
     stateVersion = "23.05";
+    preferXdgDirectories = true;
+
+    sessionVariables = {
+      "GTK_USE_PORTAL" = 1;
+    };
 
     packages = with pkgs; [
       kdePackages.libksysguard
       webcord
-      prismlauncherPatched
+      prismlauncher
       spotify
       keepassxc
       distrobox
-      ansel
+      xournalpp
+      #ansel
+      libreoffice-qt6-fresh
     ];
   };
 
@@ -30,11 +32,19 @@ in
       enable = true;
       userEmail = "matthias.griebl@outlook.de";
       userName = "Matthias Griebl";
+      extraConfig = {
+        # Disable the git warning on init...
+        init.defaultBranchName = "main";
+      };
     };
     direnv = {
       enable = true;
       enableZshIntegration = true;
       nix-direnv.enable = true;
+    };
+    chromium = {
+      enable = true;
+      package = pkgs.ungoogled-chromium;
     };
   };
   

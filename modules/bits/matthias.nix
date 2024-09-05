@@ -8,4 +8,6 @@
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.matthias = import ../../home/matthias.nix;
+
+  programs.nh.flake = "/home/matthias/Development/Sources/nixos-configs";
 }

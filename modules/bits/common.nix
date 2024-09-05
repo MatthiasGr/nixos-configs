@@ -34,6 +34,7 @@
       startAgent = true;
     };
     nix-ld.enable = true;
+    nh.enable = true;
   };
 
   services.flatpak.enable = true;
