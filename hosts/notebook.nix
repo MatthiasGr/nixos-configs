@@ -81,6 +81,7 @@
       "/var/lib/nixos"
       "/etc/NetworkManager/system-connections"
       "/var/lib/waydroid"
+      "/etc/secureboot"
       { directory = "/var/lib/iwd"; mode = "0700"; }
     ];
     files = [
@@ -97,6 +98,7 @@
     doh = true;
     graphical = true;
     podman = true;
+    secureboot = true;
     zsh = true;
   };
 

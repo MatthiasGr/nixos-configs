@@ -7,8 +7,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     impermanence.url = "github:nix-community/impermanence";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, nixpkgs, home-manager, impermanence }:
+  outputs = { self, nixpkgs, home-manager, impermanence, lanzaboote }:
     let
       pkgsForSystem = system: import nixpkgs {
         inherit system;
@@ -35,6 +39,7 @@
         modules = [
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
+          lanzaboote.nixosModules.lanzaboote
           ./modules/bits
           ./hosts/notebook.nix
         ];

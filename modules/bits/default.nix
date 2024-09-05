@@ -1,5 +1,5 @@
 { lib, ... }: {
-  imports = [ ./common.nix ./doh.nix ./gaming.nix ./graphical.nix ./matthias.nix ./podman.nix ./zsh.nix ];
+  imports = [ ./common.nix ./doh.nix ./gaming.nix ./graphical.nix ./matthias.nix ./podman.nix ./secureboot.nix ./zsh.nix ];
 
   options.bits = {
     common = lib.mkOption {
@@ -31,6 +31,11 @@
       type = lib.types.bool;
       default = false;
       description = "Enable podman as a docker standin";
+    };
+    secureboot = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Enable secure boot with lanzaboote";
     };
     zsh = lib.mkOption {
       type = lib.types.bool;
