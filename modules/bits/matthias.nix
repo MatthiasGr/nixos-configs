@@ -1,4 +1,4 @@
-{ config, lib, ... }: lib.mkIf config.bits.matthias {
+{ flake, config, lib, ... }: lib.mkIf config.bits.matthias {
   users.users.matthias = {
     isNormalUser = true;
     autoSubUidGidRange = true;
@@ -7,7 +7,7 @@
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.matthias = import ../../home/matthias.nix;
+  home-manager.users.matthias = flake.outputs.homeManagerModules.matthias;
 
   programs.nh.flake = "/home/matthias/Development/Sources/nixos-configs";
 }

@@ -27,6 +27,10 @@
     vscode = {
         enable = true;
         package = pkgs.vscode.fhs;
+        userSettings = {
+          "editor.fontLigatures" = true;
+          "editor.rulers" = [100 120];
+        };
     };
     git = {
       enable = true;
@@ -63,6 +67,42 @@
       };
       Install.WantedBy = [ "graphical-session.target" ];
       Service.ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
+    };
+  };
+
+  stylix = {
+    enable = true;
+    image = pkgs.forest-cascades-wallpaper;
+    # While the dark theme derived from the wallpaper is actually pretty good, but not quite what I
+    # want.
+    # This one does not really fit the background, but oh well.
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night-eighties.yaml";
+    cursor = {
+      package = pkgs.kdePackages.breeze;
+      name = "breeze_cursors";
+      size = 24;
+    };
+    fonts = {
+      serif = {
+        package = pkgs.noto-fonts;
+        name = "Noto Serif";
+      };
+      sansSerif = {
+        package = pkgs.noto-fonts;
+        name = "Noto Sans";
+      };
+      monospace = {
+        package = pkgs.nerdfonts;
+        name = "JetBrainsMono Nerd Font";
+      };
+      emoji = {
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
+      };
+      sizes = {
+        applications = 10;
+        terminal = 10;
+      };
     };
   };
 }

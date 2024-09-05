@@ -11,8 +11,15 @@
       url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:danth/stylix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
   };
-  outputs = { self, nixpkgs, home-manager, impermanence, lanzaboote }:
+  outputs = { self, nixpkgs, home-manager, impermanence, lanzaboote, stylix }:
     let
       pkgsForSystem = system: import nixpkgs {
         inherit system;
@@ -31,6 +38,7 @@
           ./modules/bits
           ./hosts/desktop.nix
         ];
+        extraArgs.flake = self;
       };
 
       nixosConfigurations.notebook = lib.nixosSystem rec {
@@ -42,14 +50,20 @@
           lanzaboote.nixosModules.lanzaboote
           ./modules/bits
           ./hosts/notebook.nix
+          { _module.args.flake = self; }
+        ];
+      };
+
+      homeManagerModules.matthias = {
+        imports = [
+          stylix.homeManagerModules.stylix
+          ./home/matthias.nix
         ];
       };
 
       homeConfigurations.matthias = home-manager.lib.homeManagerConfiguration {
         pkgs = pkgsForSystem "x86_64-linux";
-        modules = [
-          ./home/matthias.nix
-        ];
+        modules = [ self.outputs.homeManagerModules.matthias ];
       };
 
       formatter = lib.genAttrs systems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
