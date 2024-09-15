@@ -9,8 +9,10 @@
       systemd-boot = {
         enable = true;
         configurationLimit = 5;
+	      consoleMode = "max";
       };
       efi.canTouchEfiVariables = true;
+      timeout = 0;
     };
     kernelModules = [ "kvm-intel" ];
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
@@ -41,6 +43,16 @@
         };
       };
     };
+    plymouth = {
+      enable = true;
+      themePackages = [ pkgs.nixos-bgrt-plymouth ];
+      theme = "nixos-bgrt";
+    };
+  };
+
+  console = {
+    earlySetup = true;
+    keyMap = "de-latin1";
   };
 
   fileSystems = {
@@ -83,6 +95,7 @@
       "/var/lib/waydroid"
       "/etc/secureboot"
       { directory = "/var/lib/iwd"; mode = "0700"; }
+      { directory = "/var/lib/bluetooth"; mode = "0700"; }
     ];
     files = [
       "/etc/machine-id"
