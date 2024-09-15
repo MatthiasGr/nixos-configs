@@ -40,6 +40,7 @@
         pkgs = pkgsForSystem system;
         modules = [
           home-manager.nixosModules.home-manager
+          lanzaboote.nixosModules.lanzaboote
           ./modules/bits
           ./hosts/desktop.nix
         ];
