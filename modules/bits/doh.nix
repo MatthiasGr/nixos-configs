@@ -3,7 +3,10 @@
     https-dns-proxy.enable = true;
     dnsmasq = {
       enable = true;
-      settings.server = with config.services.https-dns-proxy; [ "${address}#${builtins.toString port}" ];
+      settings = {
+        server = with config.services.https-dns-proxy; [ "${address}#${builtins.toString port}" ];
+        bind-interfaces = true;
+      };
     };
   };
 

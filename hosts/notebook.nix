@@ -15,7 +15,7 @@
       timeout = 0;
     };
     kernelModules = [ "kvm-intel" ];
-    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    kernelPackages = pkgs.linuxPackages_zen;
     zfs = {
       allowHibernation = true;
       forceImportRoot = false;
@@ -127,9 +127,11 @@
   services = {
     printing.enable = true;
     openssh = {
-    enable = true;
+      enable = true;
       settings.PasswordAuthentication = false;
     };
+    # Waydroid uses its own dnsmasq instance (TODO: Is there any nice way to override this?)
+    dnsmasq.settings.except-interface = ["waydroid0"];
   };
 
   programs = {
@@ -142,6 +144,8 @@
       package = pkgs.wireshark-qt;
     };
   };
+
+  virtualisation.waydroid.enable = true;
 
   # With a stateless setup, the lecture would show up every time
   security.sudo.extraConfig = ''
