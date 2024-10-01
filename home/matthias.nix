@@ -76,7 +76,7 @@
     # While the dark theme derived from the wallpaper is actually pretty good, but not quite what I
     # want.
     # This one does not really fit the background, but oh well.
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night-eighties.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/woodland.yaml";
     cursor = {
       package = pkgs.kdePackages.breeze;
       name = "breeze_cursors";
