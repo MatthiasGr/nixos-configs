@@ -85,6 +85,15 @@
     }
   ];
 
+  age = {
+    # At the point where agenix is executed, impermanence has not yet been set up so we need the
+    # "real" path of our ssh host key.
+    identityPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
+    secrets = {
+      hashedPassword.file = ../secrets/hashedPassword.age;
+    };
+  };
+
   environment.persistence."/persist" = {
     enable = true;
     hideMounts = true;
@@ -113,6 +122,14 @@
     podman = true;
     secureboot = true;
     zsh = true;
+  };
+
+  users = {
+    mutableUsers = false;
+    users.matthias = {
+      uid = 1000;
+      hashedPasswordFile = config.age.secrets.hashedPassword.path;
+    };
   };
 
   networking = {

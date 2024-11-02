@@ -29,13 +29,7 @@
       enable = true;
       config.init.defaultBranch = "main";
     };
-    ssh = {
-      askPassword = "${pkgs.libsForQt5.ksshaskpass}/bin/ksshaskpass";
-      startAgent = true;
-    };
     nix-ld.enable = true;
     nh.enable = true;
   };
-
-  services.flatpak.enable = true;
 }

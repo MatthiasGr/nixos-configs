@@ -89,6 +89,15 @@ in lib.mkIf config.bits.graphical {
       };
     };
     kdeconnect.enable = true;
+    ssh = {
+      askPassword = "${pkgs.libsForQt5.ksshaskpass}/bin/ksshaskpass";
+      startAgent = true;
+    };
+  };
+
+  services = {
+    flatpak.enable = true;
+    pcscd.enable = true;
   };
 
   security.rtkit.enable = true;

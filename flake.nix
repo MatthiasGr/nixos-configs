@@ -18,8 +18,12 @@
         home-manager.follows = "home-manager";
       };
     };
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, nixpkgs, home-manager, impermanence, lanzaboote, stylix }:
+  outputs = { self, nixpkgs, home-manager, impermanence, lanzaboote, stylix, agenix }:
     let
       pkgsForSystem = system: import nixpkgs {
         inherit system;
@@ -48,6 +52,7 @@
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
           lanzaboote.nixosModules.lanzaboote
+          agenix.nixosModules.default
           ./modules/bits
           ./hosts/notebook.nix
           { _module.args.flake = self; }
@@ -70,7 +75,9 @@
       packages = lib.genAttrs systems pkgsForSystem;
 
       devShells = lib.genAttrs systems (system: {
-        default = import ./shell.nix { pkgs = pkgsForSystem system; };
+        default = import ./shell.nix {
+          pkgs = (pkgsForSystem system) // { inherit (agenix.packages.${system}) agenix; };
+        };
       });
     };
 }
