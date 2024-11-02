@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: lib.mkIf config.bits.common {
+{ config, lib, pkgs, flake, ... }: lib.mkIf config.bits.common {
   environment.systemPackages = with pkgs; [
     bat
     curl
@@ -8,7 +8,10 @@
     tmux
   ];
 
-  nix.settings.extra-experimental-features = [ "flakes" "nix-command" ];
+  nix = {
+    settings.extra-experimental-features = [ "flakes" "nix-command" ];
+    registry.pkgs = { inherit flake; };
+  };
 
   time.timeZone = "Europe/Berlin";
   i18n = {
