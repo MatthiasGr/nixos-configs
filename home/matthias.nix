@@ -25,12 +25,12 @@
   programs = {
     home-manager.enable = true;
     vscode = {
-        enable = true;
-        package = pkgs.vscode.fhs;
-        userSettings = {
-          "editor.fontLigatures" = true;
-          "editor.rulers" = [100 120];
-        };
+      enable = true;
+      package = pkgs.vscode.fhs;
+      userSettings = {
+        "editor.fontLigatures" = true;
+        "editor.rulers" = [ 100 120 ];
+      };
     };
     git = {
       enable = true;
@@ -38,7 +38,7 @@
       userName = "Matthias Griebl";
       extraConfig = {
         # Disable the git warning on init...
-        init.defaultBranchName = "main";
+        init.defaultbranchname = "main";
       };
     };
     direnv = {
@@ -51,7 +51,7 @@
       package = pkgs.ungoogled-chromium;
     };
   };
-  
+
   services = {
     ssh-agent.enable = true;
   };
@@ -92,7 +92,7 @@
         name = "Noto Sans";
       };
       monospace = {
-        package = pkgs.nerdfonts;
+        package = pkgs.nerd-fonts.jetbrains-mono;
         name = "JetBrainsMono Nerd Font";
       };
       emoji = {
