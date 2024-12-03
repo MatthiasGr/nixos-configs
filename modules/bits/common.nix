@@ -35,4 +35,24 @@
     nix-ld.enable = true;
     nh.enable = true;
   };
+
+  # Provide /bin/bash and /usr/bin/bash for more scripts to work
+  # I know that this is not the "nixos way", but I prefer a working system over principals
+  # This is based on the existing snippet for /bin/sh
+  system.activationScripts = {
+    binbash = {
+      deps = [ "binsh" ];
+      text = ''
+        ln -sfn "${pkgs.bashInteractive}/bin/bash" /bin/.bash.tmp
+        mv /bin/.bash.tmp /bin/bash
+      '';
+    };
+    usrbinbash = {
+      deps = [ "usrbinenv" ];
+      text = ''
+        ln -sfn "${pkgs.bashInteractive}/bin/bash" /usr/bin/.bash.tmp
+        mv /usr/bin/.bash.tmp /usr/bin/bash
+      '';
+    };
+  };
 }
