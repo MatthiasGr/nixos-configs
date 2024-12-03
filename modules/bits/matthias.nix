@@ -2,7 +2,7 @@
   users.users.matthias = {
     isNormalUser = true;
     autoSubUidGidRange = true;
-    extraGroups = with lib; [ "wheel" ] ++ optional config.programs.wireshark.enable "wireshark";
+    extraGroups = with lib; [ "wheel" "dialout" ] ++ optional config.programs.wireshark.enable "wireshark";
   };
 
   home-manager.useGlobalPkgs = true;
