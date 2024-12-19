@@ -117,7 +117,6 @@
   };
 
   bits = {
-    doh = true;
     graphical = true;
     podman = true;
     secureboot = true;

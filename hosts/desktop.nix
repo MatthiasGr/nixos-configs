@@ -49,7 +49,6 @@
     graphical = true;
     podman = true;
     zsh = true;
-    doh = true;
     gaming = true;
   };
 

@@ -1,5 +1,5 @@
 { lib, ... }: {
-  imports = [ ./common.nix ./doh.nix ./gaming.nix ./graphical.nix ./matthias.nix ./podman.nix ./secureboot.nix ./zsh.nix ];
+  imports = [ ./common.nix ./dns.nix ./gaming.nix ./graphical.nix ./matthias.nix ./podman.nix ./secureboot.nix ./zsh.nix ];
 
   options.bits = {
     common = lib.mkOption {
@@ -7,10 +7,10 @@
       default = true;
       description = "Set some common options and install the ususal packages";
     };
-    doh = lib.mkOption {
+    dns = lib.mkOption {
       type = lib.types.bool;
-      default = false;
-      description = "Use a local DNS-over-HTTPS resolver";
+      default = true;
+      description = "Use local DNS over a DNS-over-HTTPS proxy";
     };
     gaming = lib.mkOption {
       type = lib.types.bool;
