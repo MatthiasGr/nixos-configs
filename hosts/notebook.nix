@@ -9,13 +9,10 @@
       systemd-boot = {
         enable = true;
         configurationLimit = 5;
-	      consoleMode = "max";
       };
       efi.canTouchEfiVariables = true;
-      timeout = 0;
     };
     kernelModules = [ "kvm-intel" ];
-    kernelPackages = pkgs.linuxPackages_zen;
     zfs = {
       allowHibernation = true;
       forceImportRoot = false;
@@ -42,11 +39,6 @@
           '';
         };
       };
-    };
-    plymouth = {
-      enable = true;
-      themePackages = [ pkgs.nixos-bgrt-plymouth ];
-      theme = "nixos-bgrt";
     };
   };
 
