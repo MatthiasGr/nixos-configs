@@ -2,16 +2,15 @@
   programs = {
     steam = {
       enable = true;
-      package = pkgs.steam.override {
-        extraEnv = {
-          STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${pkgs.proton-ge-custom}";
-        };
-      };
+      extraCompatPackages = with pkgs; [ proton-ge-bin ];
+      protontricks.enable = true;
     };
     gamescope.enable = true;
+    gamemode.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
     steam-run
+    plasma-gamemode
   ];
 }

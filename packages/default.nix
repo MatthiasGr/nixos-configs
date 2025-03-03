@@ -8,4 +8,5 @@ self: super: {
   proton-ge-custom = self.callPackage ./proton-ge-custom.nix { };
   krohnkite = self.callPackage ./krohnkite { };
   forest-cascades-wallpaper = self.callPackage ./forest-cascades-wallpaper { };
+  plasma-gamemode = self.callPackage ./plasma-gamemode.nix { };
 }
