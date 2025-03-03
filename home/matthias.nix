@@ -27,10 +27,6 @@
     vscode = {
       enable = true;
       package = pkgs.vscode.fhs;
-      userSettings = {
-        "editor.fontLigatures" = true;
-        "editor.rulers" = [ 100 120 ];
-      };
     };
     git = {
       enable = true;
@@ -71,7 +67,7 @@
   };
 
   stylix = {
-    enable = true;
+    enable = false;
     image = pkgs.forest-cascades-wallpaper;
     # While the dark theme derived from the wallpaper is actually pretty good, but not quite what I
     # want.
