@@ -8,7 +8,7 @@
     };
     impermanence.url = "github:nix-community/impermanence";
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.1";
+      url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {
@@ -22,12 +22,13 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
   };
-  outputs = { self, nixpkgs, home-manager, impermanence, lanzaboote, stylix, agenix }:
+  outputs = { self, nixpkgs, home-manager, impermanence, lanzaboote, stylix, agenix, nixos-cosmic }:
     let
       pkgsForSystem = system: import nixpkgs {
         inherit system;
-        overlays = [ (import ./packages) ];
+        overlays = [ (import ./packages) (nixos-cosmic.overlays.default) ];
         config.allowUnfree = true;
       };
       systems = [ "x86_64-linux" "aarch64-linux" ];
@@ -49,10 +50,17 @@
         system = "x86_64-linux";
         pkgs = pkgsForSystem system;
         modules = [
+	  {
+            nix.settings = {
+              substituters = [ "https://cosmic.cachix.org/" ];
+              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+            };
+          }
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
           lanzaboote.nixosModules.lanzaboote
           agenix.nixosModules.default
+          nixos-cosmic.nixosModules.default
           ./modules/bits
           ./hosts/notebook.nix
           { _module.args.flake = self; }

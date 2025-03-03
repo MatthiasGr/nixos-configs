@@ -1,24 +1,15 @@
 { stdenv, fetchFromGitHub, fetchpatch, kdePackages, cmake }:
-let
-  plasma6Patch = fetchpatch {
-    url = "https://patch-diff.githubusercontent.com/raw/psifidotos/applet-window-buttons/pull/214.diff";
-    hash = "sha256-jcVcrBDip2cPs6Ow55IQWRE7rMO6sBe3QEVbPZZxLQk=";
-  };
-in
 stdenv.mkDerivation rec {
-  pname = "applet-window-buttons";
-  version = "0.12.0";
-  # TODO
+  pname = "applet-window-buttons6";
+  version = "0.14.0";
   dontWrapQtApps = true;
 
   src = fetchFromGitHub {
-    owner = "psifidotos";
+    owner = "moodyhunter";
     repo = pname;
-    rev = "0.11.1";
-    hash = "sha256-Qww/22bEmjuq+R3o0UDcS6U+34qjaeSEy+g681/hcfE=";
+    rev = "v${version}";
+    hash = "sha256-HnlgBQKT99vVkl6DWqMkN8Vz+QzzZBGj5tqOJ22VkJ8=";
   };
-
-  patches = [ plasma6Patch ];
 
   nativeBuildInputs = with kdePackages; [
     cmake

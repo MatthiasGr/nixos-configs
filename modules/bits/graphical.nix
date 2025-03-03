@@ -1,27 +1,32 @@
-{ config, lib, pkgs, ... }: let
+{ config, lib, pkgs, ... }:
+let
   # Create a custom derivation containing all SDDM themes from the base package but with a custom background image set.
   # basePkg needs to be a derivation while backgroundPath may be any path-like value.
-  setSddmBackground = basePkg: backgroundPath: pkgs.runCommand "${basePkg.name}-sddm-custom-background" {} ''
-      dir=$out/share/sddm/themes/
-      mkdir -p "$dir"
-      for theme in ${basePkg}/share/sddm/themes/*; do
-        theme_name="''${theme##*/}"
-        echo $theme_name
-        dest_dir="$dir/''${theme_name}-custom-background"
-        cp -r "$theme" "$dest_dir"
-        chmod +w "$dest_dir/theme.conf"
-        ${pkgs.crudini}/bin/crudini --set --inplace $dest_dir/theme.conf \
-          General background ${backgroundPath}
-      done
-    '';
-in lib.mkIf config.bits.graphical {
+  setSddmBackground = basePkg: backgroundPath: pkgs.runCommand "${basePkg.name}-sddm-custom-background" { } ''
+    dir=$out/share/sddm/themes/
+    mkdir -p "$dir"
+    for theme in ${basePkg}/share/sddm/themes/*; do
+      theme_name="''${theme##*/}"
+      echo $theme_name
+      dest_dir="$dir/''${theme_name}-custom-background"
+      cp -r "$theme" "$dest_dir"
+      chmod +w "$dest_dir/theme.conf"
+      ${pkgs.crudini}/bin/crudini --set --inplace $dest_dir/theme.conf \
+        General background ${backgroundPath}
+    done
+  '';
+in
+lib.mkIf config.bits.graphical {
   services = {
     displayManager.sddm = {
       enable = true;
       wayland.enable = true;
       theme = "breeze-custom-background";
     };
-    desktopManager.plasma6.enable = true;
+    desktopManager = {
+      plasma6.enable = true;
+      #cosmic.enable = true;
+    };
 
     pipewire = {
       enable = true;
@@ -119,6 +124,11 @@ in lib.mkIf config.bits.graphical {
       papirus-icon-theme
       # The plasma desktop derivation contains the breeze theme
       (setSddmBackground plasma-desktop forest-cascades-wallpaper)
+      # Extra packages for cosmic
+      #cosmic-ext-applet-clipboard-manager
+      #cosmic-ext-applet-emoji-selector
+      #cosmic-ext-observatory
+      #cosmic-ext-tweaks
     ];
     plasma6.excludePackages = with pkgs.kdePackages; [
       elisa
